@@ -17,7 +17,7 @@
     <script>
         const dataSource = 'https://s5.ssl.qhres.com/static/b0695e2dd30daa64.json';
 
-        (async function () {
+        void async function () {
             const data = await (await fetch(dataSource)).json();
 
             const regions = d3.hierarchy(data)
@@ -39,20 +39,24 @@
                 textColor = 'white'
             } = {}) {
                 const children = node.children;
+                // const children = ''
                 const {
                     x,
                     y,
                     r
-                } = node;
+                } = node; // 外面大圆/内部小圆
                 ctx.fillStyle = fillStyle;
                 ctx.beginPath();
-                ctx.arc(x, y, r, 0, TAU);
+                ctx.arc(x, y, r, 0, TAU); // 圆心的x,y坐标 起始角是 0，结束角是 2π
                 ctx.fill();
+                // 画大圆/小圆结束
                 if (children) {
+                    // 如果有children就开始画小圆
                     for (let i = 0; i < children.length; i++) {
-                        draw(ctx, children[i]);
+                        draw(ctx, children[i]); // 内部小圆 递归调用画小圆
                     }
                 } else {
+                    // 如果没有children画文字
                     const name = node.data.name;
                     ctx.fillStyle = textColor;
                     ctx.font = '1.5rem Arial';
@@ -62,7 +66,7 @@
             }
 
             draw(context, root);
-        }());
+        }();
     </script>
 </body>
 </html>
