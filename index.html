@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可视化</title>
+</head>
+<style>
+    canvas {
+        width: 256px;
+        height: 256px;
+    }
+</style>
+<body>
+    <canvas width="512" height="512"></canvas>
+</body>
+<script>
+    const canvas = document.querySelector('canvas'); // 获取canvas
+    const context = canvas.getContext('2d'); // 获取canvas2d上下文
+
+    const rectSize = [100, 100]; // 宽高
+    context.fillStyle = 'red'; // 颜色
+    context.beginPath(); // 
+    context.rect(0.5 * canvas.width, 0.5 * canvas.height, ...rectSize); // 
+    context.fill(); // 
+</script>
+</html>
