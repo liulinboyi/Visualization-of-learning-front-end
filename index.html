@@ -9,6 +9,7 @@
     canvas {
         width: 256px;
         height: 256px;
+        border: 1px red solid;
     }
 </style>
 <body>
@@ -20,8 +21,9 @@
 
     const rectSize = [100, 100]; // 宽高
     context.fillStyle = 'red'; // 颜色
-    context.beginPath(); // 
-    context.rect(0.5 * canvas.width, 0.5 * canvas.height, ...rectSize); // 
-    context.fill(); // 
+    context.beginPath(); // 绘制路径
+    context.rect(0.5 * (canvas.width - rectSize[0]), 0.5 * (canvas.height - rectSize[1]), ...rectSize); // 绘制矩形
+    // 矩形中心为画布中心0.5 * (canvas.width - rectSize[0]), 0.5 * (canvas.height - rectSize[1]), ...rectSize)
+    context.fill(); // 填充 将绘制的内容真正的绘制到画布中
 </script>
 </html>
