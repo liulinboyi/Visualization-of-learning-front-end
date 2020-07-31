@@ -1,0 +1,79 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>WebGL</title>
+</head>
+<body style="background: #000">
+    <canvas id="canvas"></canvas>
+</body>
+<!-- 顶点着色器源码 -->
+<script type="shader-source" id="vertexShader">
+    //接收顶点坐标 (x, y)
+        attribute vec2 a_Position;
+        void main(){
+               gl_Position = vec4(a_Position, 0, 1);
+               gl_PointSize = 10.0;
+        }
+    </script>
+
+<!-- 片元着色器源码 -->
+<script type="shader-source" id="fragmentShader">
+    void main(){
+               gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+        }
+    </script>
+<script type="text/javascript" src="helper.js"></script>
+<script type="text/javascript">
+    var canvas = getCanvas('#canvas');
+    resizeCanvas(canvas);
+    var gl = getContext(canvas);
+    //创建顶点着色器
+    var vertexShader = createShaderFromScript(gl, gl.VERTEX_SHADER, 'vertexShader');
+    //创建片元着色器
+    var fragmentShader = createShaderFromScript(gl, gl.FRAGMENT_SHADER, 'fragmentShader');
+    //创建着色器程序
+    var program = createSimpleProgram(gl, vertexShader, fragmentShader);
+    // 使用刚创建好的着色器程序。
+    gl.useProgram(program);
+
+    //创建缓冲区
+    // var positions = new Float32Array([
+    //     0.0, 0.5,
+    //     0.5, 0.0,
+    //     0.5, 0.5,
+    //     0.5, 0.5,
+    //     -0.5, 0.5,
+    //     -0.5, 0.0,
+    // ]);
+    var positions = new Float32Array([
+        0, 1,
+        1, -1,
+        -1, -1,
+    ]);
+    var a_Position = gl.getAttribLocation(program, 'a_Position')
+    var buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+    //每次取两个数据
+    var size = 2;
+    //每个数据的类型是32位浮点型
+    var type = gl.FLOAT;
+    //不需要归一化数据
+    var normalize = false;
+    // 每次迭代运行需要移动数据数 * 每个数据所占内存 到下一个数据开始点。
+    var stride = 0;
+    // 从缓冲起始位置开始读取
+    var offset = 0;
+    // 将 a_Position 变量获取数据的缓冲区指向当前绑定的 buffer。
+    gl.vertexAttribPointer(a_Position, size, type, normalize, stride, offset);
+    gl.enableVertexAttribArray(a_Position);
+
+    var primitiveType = gl.LINE_LOOP;
+    var offset = 0;
+    var count = 3;
+    gl.drawArrays(primitiveType, offset, count);
+</script>
+</html>
