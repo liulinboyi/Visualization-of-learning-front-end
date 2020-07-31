@@ -26,7 +26,10 @@ function createCircleVertex(x, y, r, n) {
 
 }
 ```
-
+```javascript
+// 正八边形 
+const points = createCircleVertex(0, 0, 0.5, 8);
+```
 图片详解：
 
 ![](./images/计算多边形详解.png)
